@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>For Sakshi ❤️</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Poppins:wght@300;500&display=swap" rel="stylesheet">
+
+<style>
+
+body{
+  margin:0;
+  height:100vh;
+  background: linear-gradient(135deg,#ff9a9e,#fad0c4);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  font-family:'Poppins',sans-serif;
+  overflow:hidden;
+}
+
+/* Falling Hearts */
+.fall{
+  position:absolute;
+  font-size:22px;
+  animation:fall 6s linear infinite;
+  pointer-events:none;
+}
+
+@keyframes fall{
+  0%{ top:-10%; opacity:0; }
+  10%{opacity:1;}
+  100%{ top:110%; opacity:0; }
+}
+
+/* Fireworks */
+.fire{
+  position:absolute;
+  font-size:30px;
+  animation:popFire 1s ease;
+  pointer-events:none;
+}
+
+@keyframes popFire{
+  from{transform:scale(0);opacity:0;}
+  to{transform:scale(1.5);opacity:1;}
+}
+
+/* Card */
+
+.card{
+  background:rgba(255,255,255,0.28);
+  backdrop-filter:blur(12px);
+  border-radius:20px;
+  padding:25px;
+  width:90%;
+  max-width:400px;
+  text-align:center;
+  box-shadow:0 0 30px rgba(255,0,90,0.4);
+  animation:pop 0.8s ease;
+  position:relative;
+  z-index:2;
+}
+
+@keyframes pop{
+  from{transform:scale(0.8);opacity:0;}
+  to{transform:scale(1);opacity:1;}
+}
+
+h1{
+  font-family:'Pacifico',cursive;
+  color:#ff2e63;
+}
+
+/* Question Glow */
+
+#q{
+  font-size:20px;
+  animation:pulse 2s infinite;
+  color:#fff;
+  text-shadow:0 0 10px pink;
+}
+
+@keyframes pulse{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.05);}
+  100%{transform:scale(1);}
+}
+
+/* Subtitle */
+
+#sub{
+  font-size:14px;
+  margin:10px 0;
+  color:#fff;
+  opacity:0.9;
+}
+
+/* Progress */
+
+.progress{
+  margin:10px 0;
+}
+
+.dot{
+  height:10px;
+  width:10px;
+  background:#ffd1dc;
+  border-radius:50%;
+  display:inline-block;
+  margin:3px;
+  opacity:0.4;
+}
+
+.dot.active{
+  opacity:1;
+  background:#ff2e63;
+}
+
+/* Buttons */
+
+button{
+  padding:12px 28px;
+  border:none;
+  border-radius:25px;
+  font-size:16px;
+  cursor:pointer;
+  margin:10px;
+  transition:0.3s;
+}
+
+.play{ background:#ff2e63; color:white; }
+
+.yes{ background:#4CAF50; color:white; }
+
+.no{
+  background:#ff1744;
+  color:white;
+  position:absolute;
+}
+
+#foreverBtn{
+  animation:pulseBtn 1.5s infinite;
+}
+
+@keyframes pulseBtn{
+  0%{transform:scale(1);}
+  50%{transform:scale(1.1);}
+  100%{transform:scale(1);}
+}
+
+button:hover{ transform:scale(1.1); }
+
+/* Photo */
+
+.photo{
+  width:200px;
+  height:200px;
+  object-fit:cover;
+  border-radius:50%;
+  border:6px solid #ff2e63;
+  margin:15px 0;
+  box-shadow:0 0 20px pink;
+}
+
+.hidden{ display:none; }
+
+/* Typing Effect */
+
+#loveText{
+  font-size:16px;
+  font-weight:500;
+  line-height:1.5;
+  margin-top:15px;
+  color:#fff;
+  text-shadow:0 0 8px pink;
+  min-height:80px;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Music -->
+<audio id="music" loop>
+  <source src="song.mp3" type="audio/mpeg">
+</audio>
+
+<!-- Love Letter -->
+<div class="card" id="letter">
+  <h1>Dear Sakshi 💌</h1>
+  <p>I made this with all my heart just for you ❤️</p>
+  <button class="play" onclick="openLetter()">Open 💖</button>
+</div>
+
+<!-- Welcome -->
+<div class="card hidden" id="welcome">
+  <h1>Happy Valentine’s Day 💝</h1>
+  <button class="play" onclick="start()">▶ Continue</button>
+</div>
+
+<!-- Questions -->
+<div class="card hidden" id="box">
+
+  <div class="progress" id="progress"></div>
+
+  <h2 id="q"></h2>
+
+  <div id="sub"></div>
+
+  <button class="yes" onclick="next()">Yes 💕</button>
+  <button class="no" id="noBtn">No 💔</button>
+
+</div>
+
+<!-- Final -->
+<div class="card hidden" id="final">
+
+  <h1>Yayyy 😍💞</h1>
+
+  <img src="Mygirl.jpg.jpeg" class="photo">
+
+  <div id="loveText"></div>
+
+  <button id="foreverBtn" class="play hidden" onclick="finalLove()">
+    Be Mine Forever? 💍❤️
+  </button>
+
+</div>
+
+<!-- Last -->
+<div class="card hidden" id="last">
+
+  <h1>I Love You Sakshi 💖</h1>
+
+  <p style="font-size:18px;">
+    You are my today, my tomorrow, and my forever 🥰
+  </p>
+
+  <p style="font-size:22px;">💍❤️💫</p>
+
+</div>
+
+<script>
+
+const music=document.getElementById("music");
+
+const letter=document.getElementById("letter");
+const welcome=document.getElementById("welcome");
+const box=document.getElementById("box");
+const final=document.getElementById("final");
+const last=document.getElementById("last");
+
+const q=document.getElementById("q");
+const sub=document.getElementById("sub");
+const no=document.getElementById("noBtn");
+const loveText=document.getElementById("loveText");
+const progress=document.getElementById("progress");
+const foreverBtn=document.getElementById("foreverBtn");
+
+let heartInterval;
+
+/* Questions */
+
+const questions=[
+ "Sakshi, will you be my Valentine? 💝",
+ "Will you stay with me always? 🥺",
+ "Will you keep making me smile? 😊",
+ "Do you love me? ❤️"
+];
+
+const subtitles=[
+ "My heart is waiting for you 💓",
+ "Please say yes baby 🥺👉👈",
+ "You make my world brighter ✨",
+ "This means everything to me ❤️"
+];
+
+let i=0;
+
+/* Love Message */
+
+const message=
+"Lemme love you so much that you forget all about your problems and above all… 💞\n\n"+
+"Lemme help you understand what true love feels like, Baby Girl!!! ❤️❤️❤️";
+
+/* Typing Effect */
+
+function typeMessage(){
+  let idx=0;
+
+  const t=setInterval(()=>{
+    loveText.innerHTML+=message[idx]==="\n"?"<br>":message[idx];
+    idx++;
+
+    if(idx>=message.length){
+      clearInterval(t);
+
+      foreverBtn.classList.remove("hidden");
+
+      startFireworks();
+    }
+  },50);
+}
+
+/* Hearts */
+
+function startHearts(){
+  heartInterval=setInterval(()=>{
+    let h=document.createElement("div");
+    h.className="fall";
+    h.innerHTML="💖";
+    h.style.left=Math.random()*100+"%";
+    h.style.animationDuration=4+Math.random()*3+"s";
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),7000);
+  },500);
+}
+
+function stopHearts(){ clearInterval(heartInterval); }
+
+/* Fireworks */
+
+function startFireworks(){
+
+  for(let i=0;i<40;i++){
+
+    setTimeout(()=>{
+
+      let f=document.createElement("div");
+      f.className="fire";
+      f.innerHTML="🎆";
+      f.style.left=Math.random()*100+"%";
+      f.style.top=Math.random()*100+"%";
+
+      document.body.appendChild(f);
+
+      setTimeout(()=>f.remove(),1000);
+
+    },i*200);
+  }
+}
+
+/* Progress */
+
+function updateProgress(){
+  progress.innerHTML="";
+  for(let j=0;j<questions.length;j++){
+    let d=document.createElement("span");
+    d.className="dot"+(j<=i?" active":"");
+    progress.appendChild(d);
+  }
+}
+
+/* Flow */
+
+function openLetter(){
+  music.play();
+  setTimeout(()=>{
+    letter.classList.add("hidden");
+    welcome.classList.remove("hidden");
+  },1500);
+}
+
+function start(){
+  welcome.classList.add("hidden");
+  box.classList.remove("hidden");
+  startHearts();
+  show();
+}
+
+function show(){
+  q.innerText=questions[i];
+  sub.innerText=subtitles[i];
+  updateProgress();
+  moveNo();
+}
+
+function next(){
+  i++;
+  if(i<questions.length) show();
+  else{
+    box.classList.add("hidden");
+    final.classList.remove("hidden");
+    stopHearts();
+    typeMessage();
+  }
+}
+
+function finalLove(){
+  final.classList.add("hidden");
+  last.classList.remove("hidden");
+}
+
+function moveNo(){
+  no.style.left=Math.random()*70+"%";
+  no.style.top=Math.random()*60+"%";
+}
+
+no.addEventListener("mouseover",moveNo);
+
+</script>
+
+</body>
+</html>
