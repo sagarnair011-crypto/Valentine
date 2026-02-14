@@ -261,6 +261,10 @@ const foreverBtn=document.getElementById("foreverBtn");
 
 let heartInterval;
 
+/* Auto Start Hearts */
+
+startHearts();
+
 /* Questions */
 
 const questions=[
@@ -366,7 +370,6 @@ function openLetter(){
 function start(){
   welcome.classList.add("hidden");
   box.classList.remove("hidden");
-  startHearts();
   show();
 }
 
@@ -383,7 +386,9 @@ function next(){
   else{
     box.classList.add("hidden");
     final.classList.remove("hidden");
-    stopHearts();
+
+    stopHearts(); // Stop at final
+
     typeMessage();
   }
 }
